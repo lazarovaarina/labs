@@ -1,0 +1,195 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+//Игрушка, продукт, товар, молочный продукт
+namespace lab1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Toy Bear = new Toy("Bear", 990, "ToysWorld", "1651015001", 19, "3+");
+            Bear.Info();
+            Milk_product Yogurt = new Milk_product("Cherry_yogurt", 59, "Простоквашино", "65514001", 24, new DateTime(2025,09,12), 8.1);
+            Yogurt.Info();
+            Product Coffee = new Product("Cappuccino", 759, "Nescafe");
+            Coffee.Info();
+
+            Console.Read();
+        }
+    }
+    public class Product
+    {
+        private string name;
+        private int price;
+        private string brand;
+
+        public Product(string name, int price, string brand)
+        {
+            this.name = name;
+            this.price = price;
+            this.brand = brand;
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                this.name = value;
+            }
+        }
+
+        public int Price
+        {
+            get
+            {
+                return this.price;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    this.price = value;
+                }
+            }
+        }
+
+        public string Brand
+        {
+            get
+            {
+                return this.brand;
+            }
+            set
+            {
+                this.brand = value;
+            }
+        }
+
+        public virtual void Info()
+        {
+            Console.Write(" {0} {1}, {2} rub. ", brand, name, price);
+        }
+    }
+
+    public class Goods : Product
+    {
+        private string barcode;
+        private int countity_in_stock;
+
+        public string Barcode
+        {
+            get
+            {
+                return this.barcode;
+            }
+            set
+            {
+                this.barcode = value;
+            }
+        }
+
+        public int Countity_in_stock
+        {
+            get
+            {
+                return countity_in_stock;
+            }
+            set
+            {
+                this.countity_in_stock = value;
+            }
+        }
+
+        public Goods(string name, int price, string brand, string barcode, int countity_in_stock) : base(name, price, brand)
+        {
+            this.countity_in_stock = countity_in_stock;
+            this.barcode = barcode;
+        }
+
+        public override void Info()
+        {
+            base.Info();
+            Console.Write("штрих-код: {0}, количество на складе: {1}. ", barcode, countity_in_stock);
+        }
+    }
+
+    public class Milk_product : Goods
+    {
+        private DateTime producrion_date;
+        private double fat_content;
+
+        public DateTime Producrion_date
+        {
+            get
+            {
+                return this.producrion_date;
+            }
+            set
+            {
+                this.producrion_date = value;
+            }
+        }
+
+
+        public double Fat_content
+        {
+            get
+            {
+                return fat_content;
+            }
+            set
+            {
+                this.fat_content = value;
+            }
+        }
+
+        public Milk_product(string name, int prise, string brand, string barcode, int countity_in_stock, DateTime producrion_date, double fat_content) : base(name, prise, brand, barcode, countity_in_stock)
+        {
+            this.producrion_date = producrion_date;
+            this.fat_content = fat_content;
+        }
+
+
+
+        public override void Info()
+        {
+            base.Info();
+            Console.WriteLine("дата производства: {0}, жирность  продукта: {1}. ", producrion_date, fat_content);
+        }
+    }
+
+    public class Toy : Goods
+    {
+        private string age_group;
+
+        public string Age_group
+        {
+            get
+            {
+                return this.age_group;
+            }
+            set
+            {
+                this.age_group = value;
+            }
+        }
+
+        public Toy(string name, int prise, string brand, string barcode, int countity_in_stock, string age_group) : base(name, prise, brand, barcode, countity_in_stock)
+        {
+            this.age_group = age_group;
+        }
+
+        public override void Info()
+        {
+            base.Info();
+            Console.WriteLine("возрастная группа: {0} ", age_group);
+        }
+    }
+}
